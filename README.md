@@ -960,3 +960,596 @@ int main(){
 }
 ```
 
+## **题目：**有 n个整数，使其前面各数顺序向后移 m 个位置，最后m个数变成最前面的 m 个数。 
+
+```c
+#include <stdio.h>
+
+#define length 5
+
+void print_arr(int [], int);
+
+int main(void) {
+    int n = 2;
+    int arr[length] = {1, 2, 3, 4, 5};
+    print_arr(arr, length);
+    puts("\n");
+    int a[n];
+    for (int k = 0; k < n; ++k) {
+        a[k] = arr[length - 1 - k];//备份背挤掉的数字;
+    }
+    for (int i = length - 1; i >= 0; i--) {
+        arr[i] = arr[i - 2];//数组移位n;
+    }
+    for (int j = 0; j < n; ++j) {
+        arr[j] = a[2 - 1 - j];//备份的数组存储到arr;
+    }
+    print_arr(arr, length);
+    return 0;
+}
+
+
+void print_arr(int arr[], int len) {
+    for (int i = 0; i < len; ++i)
+        printf("%d ", arr[i]);
+}
+```
+
+## **题目：**编写input()和output()函数输入，输出5个学生的数据记录。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct{
+	char name[20];
+	char sex;
+	int age;
+}Stu;
+
+void input(Stu *s){
+	int i;
+	printf("请依次输入每位同学的名字，性别，年龄：\n");
+	for(i=0; i<5; i++){
+		scanf("%s%s%d", &(s[i].name),&(s[i].sex),&(s[i].age));
+		//注意取地址位置！！ 
+	}
+} 
+
+void output(Stu *s){
+	int i;
+	printf("五位同学数据记录如下：\n");
+	for(i=0; i<5; i++){
+		printf("%s  %c  %d\n", s[i].name,s[i].sex,s[i].age);
+	}
+}
+int main() {
+	Stu s[5];//注意类型为Stu! 
+	input(s);
+	output(s);
+	return 0;
+}
+```
+
+## **题目：**输入一个整数，并将其反转后输出。
+
+```c
+#include <stdio.h>
+
+int main() {
+    int n, reversedNumber = 0, remainder;
+    printf("输入一个整数: ");
+    scanf("%d", &n);
+    while (n != 0) {
+        remainder = n % 10;
+        reversedNumber = reversedNumber * 10 + remainder;
+        n /= 10;
+    }
+    printf("反转后的整数: %d", reversedNumber);
+    return 0;
+}
+```
+
+## 	**题目：**填空练习（指向指针的指针）。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int arr[3] = {2, 2, 5};
+    int **a;
+    for (int i = 0; i < 3; ++i) {
+        a = &arr[i];
+        printf("%d ", *a);
+    }
+    return 0;
+}
+```
+
+
+
+## **题目：**找到年龄最大的人，并输出。请找出程序中有什么问题。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+struct man {
+    char name[12];
+    int age;
+};
+struct man man[3] = {"zhang", 13, "xiao", 14, "wang", 23};
+
+int main() {
+    int n = man[0].age;
+    for (int i = 0; i < 3; ++i) {
+        if (man[i].age > n)
+            n = i;
+    }
+    printf("%d %s",man[n].age,man[n].name);
+    return 0;
+}
+```
+
+## **题目：**海滩上有一堆桃子，五只猴子来分。第一只猴子把这堆桃子平均分为五份，多了一个，这只 猴子把多的一个扔入海中，拿走了一份。第二只猴子把剩下的桃子又平均分成五份，又多了 一个，它同样把多的一个扔入海中，拿走了一份，第三、第四、第五只猴子都是这样做的， 问海滩上原来最少有多少个桃子？
+
+##**题目：**八进制转换为十进制
+
+```c
+#include <stdio.h>
+#include <math.h>
+ 
+long long convertOctalToDecimal(int octalNumber);
+int main()
+{
+    int octalNumber;
+ 
+    printf("输入一个八进制数: ");
+    scanf("%d", &octalNumber);
+ 
+    printf("八进制数 %d  转换为十进制为 %lld", octalNumber, convertOctalToDecimal(octalNumber));
+ 
+    return 0;
+}
+ 
+long long convertOctalToDecimal(int octalNumber)
+{
+    int decimalNumber = 0, i = 0;
+ 
+    while(octalNumber != 0)
+    {
+        decimalNumber += (octalNumber%10) * pow(8,i);
+        ++i;
+        octalNumber/=10;
+    }
+ 
+    i = 1;
+ 
+    return decimalNumber;
+}
+```
+
+**题目：**一个偶数总能表示为两个素数之和。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int Isprimer(unsigned int n);
+
+int main() {
+    unsigned int n, i;
+    do {
+        printf("请输入一个偶数:\n");
+        scanf("%d", &n);
+    } while (n % 2 != 0);
+    for (i = 1; i < n; i++)
+        printf("n:%d n-1:%d \n", i, n - i);
+    if (Isprimer(i) && Isprimer(n - i)) {
+
+    }
+
+    return 0;
+}
+
+int Isprimer(unsigned int n) {
+    int i;
+    if (n < 4)return 1;
+    else if (n % 2 == 0)return 0;
+    else
+        for (i = 3; sqrt(n) + 1 > i; i++)
+            if (n % i == 0)return 0;
+
+    return 1;
+}
+```
+
+## **题目：**判断一个素数能被几个9整除。
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+    int p,i;
+    long int sum=9;
+    printf("请输入一个素数:\n");
+    scanf("%d",&p);
+    for(i=1;;i++)
+        if(sum%p==0)break;
+        else sum=sum*10+9;
+    
+    printf("素数%d能整除%d个9组成的数%ld\n",p,i,sum);
+    return 0;
+}
+```
+
+## **题目：**判断一个素数能被几个9整除。
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+    int p,i;
+    long int sum=9;
+    printf("请输入一个素数:\n");
+    scanf("%d",&p);
+    for(i=1;;i++)
+        if(sum%p==0)break;//9不是质数,且这个数是可以被9的合数整除的,所以要反过来.
+        else sum=sum*10+9;
+    
+    printf("素数%d能整除%d个9组成的数%ld\n",p,i,sum);
+    return 0;
+}
+```
+
+## **题目：**两个字符串连接程序 。
+
+```c
+#include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
+ 
+char* strconnect(char *str1,char *str2);
+ 
+int main()
+{
+    char str1[20],str2[20];
+    char *str;
+    puts("请输入两个字符串，用回车分开:");
+    scanf("%s%s", str1, str2);
+    str=strconnect(str1,str2);
+    puts("连接后的字符串为:");
+    puts(str);
+    return 0;
+}
+char* strconnect(char *str1,char *str2)
+{
+    char*str;
+    str=(char*)malloc(strlen(str1)+strlen(str2)+1);
+    str[0]='\0';
+    strcat(str,str1);
+    strcat(str,str2);
+    return str;
+}
+```
+
+## **题目：**回答结果（结构体变量传递）。
+
+```c
+#include <stdio.h>
+
+struct student {
+    char name[20];
+    int age;
+};
+struct student stu = {
+        .name = "xiaoming",
+        .age = 23
+};
+
+void printINfo(struct student);
+
+int main(void) {
+    printINfo(stu);
+    return 0;
+}
+
+void printINfo(struct student stu) {
+    printf("name:%s \nage:%3d", stu.name, stu.age);
+}
+```
+
+## **题目：**某个公司采用公用电话传递数据，数据是四位的整数，在传递过程中是加密的，加密规则如下： 每位数字都加上5,然后用和除以10的余数代替该数字，再将第一位和第四位交换，第二位和第三位交换。
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+
+void swap(int *, int *);
+
+int main() {
+    int nun[4] = {1, 2, 3, 4};
+    int bak[4];
+    for (int i = 0; i < 4; ++i)
+        bak[i] = nun[i] + 5;
+    for (int j = 0; j < 4; ++j)
+        bak[j] = bak[j] % 10;
+    swap(&bak[0], &bak[3]);
+    swap(&bak[1], &bak[2]);
+    for (int k = 0; k < 4; ++k) {
+        printf("%d ", bak[k]);
+    }
+    return 0;
+}
+
+void swap(int *a, int *b) {
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+
+```
+
+## 题目:利用指针交换数字;
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+
+#define M 5
+int main()
+{
+    int a[M]={1,2,3,4,5};
+    int i,j,t;
+    i=0;j=M-1;
+    while(i<j)
+    {
+        t=*(a+i);
+        *(a+i)=*(a+j);
+        *(a+j)=t;
+        i++;j--;
+    }
+    for(i=0;i<M;i++) {
+        printf("%d\n",*(a+i));
+    }
+    
+}
+```
+
+## 获取当前时间和日期并转换为本地时间
+
+```c
+#include <stdio.h>
+#include <time.h>
+
+int main ()
+{
+    time_t rawtime; //这是一个适合存储日历时间类型。
+    struct tm * timeinfo;//这是一个用来保存时间和日期的结构。
+    time ( &rawtime );  //此函数会返回从公元 1970 年1 月1 日的UTC 时间从0 时0 分0 秒算起到现在所经过的秒数。
+    timeinfo = localtime ( &rawtime );//获取当前时间和日期并转换为本地时间
+    printf ( "当前本地时间为: %s", asctime (timeinfo) );
+    return 0;
+}
+```
+
+
+
+## 做10000000次空循环需要的时间为
+
+```c
+#include <stdio.h>
+#include <time.h>
+
+int main() {
+    long i = 10000000L;
+    clock_t start, finish;
+    double Thetimes;
+    printf("做%ld次空循环需要的时间为: ", i);
+    start = clock();
+    int a = 1;
+    while (i--)
+        finish = clock();
+    Thetimes = (double) (finish - start) / CLOCKS_PER_SEC;//表示一秒钟内CPU运行的时钟周期数，
+    printf("%lf 秒", Thetimes);
+    return 0;
+}
+```
+
+## 猜数游戏
+
+```c
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+int main() {
+    srand((unsigned int) time(NULL));
+    int v = (rand() & 100 + 1);
+    int n;
+    printf("请输入一个数字: \n");
+    scanf("%d", &n);
+    while (v != n) {
+        if (n < v) {
+            printf("数字小了\n");
+            printf("重新输入:");
+            scanf("%d", &n);
+        } else if (n > v) {
+            printf("数字大了\n");
+            printf("重新输入:");
+            scanf("%d", &n);
+        }
+    }
+    printf("你猜对了\n");
+    return 0;
+}
+```
+
+## **题目：**简单的结构体应用实例。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+    float age;
+    char *tel;
+};
+
+int main() {
+    char phone[] = "12341234";
+    int age = 32;
+    struct student stu = {
+            .age = age,
+            .tel = phone
+    };
+    printf("%.2f\n", stu.age);
+    printf("%s", stu.tel);
+    return 0;
+}
+```
+
+## **题目：**从键盘输入一些字符，逐个把它们送到磁盘上去，直到输入一个#为止。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    char path[100];
+    printf("输入地址:");
+    scanf("%s", &path);
+    FILE *fp = fopen(path, "a");
+    char c;
+    if (fp == NULL) {
+        puts("path 有误");
+        return 0;
+    }
+    while ((c = getchar()) != '#') {
+        fputc(c, fp);
+    }
+    fclose(fp);
+    return 0;
+}
+```
+
+## **题目：**从键盘输入一个字符串，将小写字母全部转换成大写字母，然后输出到一个磁盘文件"test"中保存。 输入的字符串以！结束。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    char path[100];
+    printf("输入地址:");
+    scanf("%s", &path);
+    FILE *fp = fopen(path, "a");
+    char c;
+    if (fp == NULL) {
+        puts("path 有误");
+        return 0;
+    }
+    while ((c = getchar()) != '!') {
+        if (c >= 97 && c <= 122)
+            fputc(c -= 32, fp);
+        else
+            fputc(c, fp);
+    }
+    fclose(fp);
+    return 0;
+}
+```
+
+## **题目：**有两个磁盘文件A和B,各存放一行字母，要求把这两个文件中的信息合并（按字母顺序排列），输出到一个新文件C中。
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+    FILE*fa,*fb,*fc;
+    int i,j,k;
+    char str[100],str1[100];
+    char tem;
+    if((fa=fopen("A.txt","r"))==NULL) // A.txt 文件需要存在
+    {
+        printf("error: cannot open A file!\n");
+        exit(0);
+    }
+    fgets(str,99,fa);
+    fclose(fa);
+    if((fb=fopen("B.txt","r"))==NULL)  // B.txt 文件需要存在
+    {
+        printf("error: cannot open B file!\n");
+        exit(0);
+    }
+    fgets(str1,100,fb);
+    fclose(fb);
+    strcat(str,str1);
+    for(i=strlen(str)-1;i>1;i--)
+        for(j=0;j<i;j++)
+            if(str[j]>str[j+1])
+            {
+                tem=str[j];
+                str[j]=str[j+1];
+                str[j+1]=tem;
+            }
+    
+    if((fc=fopen("C.txt","w"))==NULL)  // 合并为 C.txt
+    {
+        printf("error: cannot open C file!\n");
+        exit(0);
+    }
+    fputs(str,fc);
+    fclose(fc);
+    system("pause");
+    return 0;
+} 	 	
+```
+
+## **题目：**有五个学生，每个学生有3门课的成绩，计算出平均成绩，况原有的数据和计算出的平均分数存放在磁盘文件"stud"中
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+struct student {
+    int id;
+    char name[10];
+    int subject1;
+    int subject2;
+    int subject3;
+    int avg;
+};
+
+int main(void) {
+    struct student stu[5] = {
+            {1, "xiaoming",    12, 67, 90},
+            {2, "xiaohong",    87, 67, 84},
+            {3, "zhangming",   27, 65, 90},
+            {4, "wangyanming", 12, 67, 95},
+            {5, "lihao",       23, 45, 90},
+    };
+    char path[100];
+    printf("输入文件地址:");
+    scanf("%s", &path);
+
+    FILE *fp = fopen(path, "w");
+    if (fp == NULL) {
+        puts("文件地址有误!");
+        return 0;
+    }
+    for (int i = 0; i < 5; ++i) {
+        stu[i].avg = (stu[i].subject1 + stu[i].subject2 + stu[i].subject3) / 3;
+        fprintf(fp, "%d\n %s\n %d\n %d\n %d\n %d", stu[i].id, stu[i].name, stu[i].subject1, stu[i].subject2, stu[i].subject3,
+                stu[i].avg);
+    }
+    fclose(fp);
+    return 0;
+}
+```
+
