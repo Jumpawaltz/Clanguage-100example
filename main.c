@@ -1,36 +1,35 @@
 #include <stdio.h>
-#include <stdlib.h>
-struct student {
-    int id;
-    char name[10];
-    int subject1;
-    int subject2;
-    int subject3;
-    int avg;
-};
+
+void readFile(FILE *);
+
+void whireFile(FILE *, char *, char *);
 
 int main(void) {
-    struct student stu[5] = {
-            {1, "xiaoming",    12, 67, 90},
-            {2, "xiaohong",    87, 67, 84},
-            {3, "zhangming",   27, 65, 90},
-            {4, "wangyanming", 12, 67, 95},
-            {5, "lihao",       23, 45, 90},
-    };
-    char path[100];
-    printf("输入文件地址:");
-    scanf("%s", &path);
+    char path[50] = "C:\\Users\\yuAn\\Desktop\\1.txt";
+    FILE *fp = fopen(path, "r");
+    char str[100];
+    puts("输入写入的内容");
+    scanf("%s", str);
+    whireFile(fp, path, str);
+    readFile(fp);
+}
 
-    FILE *fp = fopen(path, "w");
+void readFile(FILE *fp) {
+    int c;
     if (fp == NULL) {
-        puts("文件地址有误!");
-        return 0;
+        puts("path ERROR");
     }
-    for (int i = 0; i < 5; ++i) {
-        stu[i].avg = (stu[i].subject1 + stu[i].subject2 + stu[i].subject3) / 3;
-        fprintf(fp, "%d\n %s\n %d\n %d\n %d\n %d", stu[i].id, stu[i].name, stu[i].subject1, stu[i].subject2, stu[i].subject3,
-                stu[i].avg);
+    while ((c = fgetc(fp)) != EOF) {
+        putchar(c);
     }
     fclose(fp);
-    return 0;
+}
+
+void whireFile(FILE *fp, char path[], char str[]) {
+    fp = fopen(path, "a");
+    if (fp == NULL) {
+        puts("path ERROR");
+    }
+    fputs(str, fp);
+    fclose(fp);
 }
